@@ -1,0 +1,148 @@
+.bubble{
+-webkit-background-clip: border-box;
+-webkit-background-origin: padding-box;
+-webkit-background-size: auto;
+-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
+background-attachment: scroll;
+background-clip: border-box;
+background-color: rgb(255, 255, 255);
+background-image: none;
+background-origin: padding-box;
+background-size: auto;
+border-bottom-color: rgb(204, 204, 204);
+border-bottom-style: solid;
+border-bottom-width: 1px;
+border-image-outset: 0px;
+border-image-repeat: stretch;
+border-image-slice: 100%;
+border-image-source: none;
+border-image-width: 1;
+border-left-color: rgb(204, 204, 204);
+border-left-style: solid;
+border-left-width: 1px;
+border-right-color: rgb(204, 204, 204);
+border-right-style: solid;
+border-right-width: 1px;
+border-top-color: rgb(204, 204, 204);
+border-top-style: solid;
+border-top-width: 1px;
+box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
+display: block;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+height: 212.1875px;
+left: 523px;
+line-height: normal;
+margin-bottom: 9px;
+position: absolute;
+top: 64px;
+width: 400px;
+z-index: 1001;
+font-family:Arial, sans-serif;
+}
+
+.bottom-prong{
+	bottom: -9px;
+display: block;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+height: 9px;
+left: 182px;
+line-height: normal;
+overflow-x: hidden;
+overflow-y: hidden;
+position: absolute;
+
+width: 18px;
+font-family:Arial, sans-serif;
+}
+
+.prong-dk{
+	border-bottom-color: rgb(204, 204, 204);
+border-bottom-style: solid;
+border-bottom-width: 0px;
+border-image-outset: 0px;
+border-image-repeat: stretch;
+border-image-slice: 100%;
+border-image-source: none;
+border-image-width: 1;
+border-left-color: rgba(0, 0, 0, 0);
+border-left-style: solid;
+border-left-width: 9px;
+border-right-color: rgba(0, 0, 0, 0);
+border-right-style: solid;
+border-right-width: 9px;
+border-top-color: rgb(204, 204, 204);
+border-top-style: solid;
+border-top-width: 9px;
+display: block;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+height: 0px;
+left: 0px;
+line-height: normal;
+position: absolute;
+top: 0px;
+
+width: 0px;
+font-family:Arial, sans-serif;
+}
+
+.proing-lt{
+border-bottom-color: rgb(255, 255, 255);
+border-bottom-style: solid;
+border-bottom-width: 0px;
+border-image-outset: 0px;
+border-image-repeat: stretch;
+border-image-slice: 100%;
+border-image-source: none;
+border-image-width: 1;
+border-left-color: rgba(0, 0, 0, 0);
+border-left-style: solid;
+border-left-width: 8px;
+border-right-color: rgba(0, 0, 0, 0);
+border-right-style: solid;
+border-right-width: 8px;
+border-top-color: rgb(255, 255, 255);
+border-top-style: solid;
+border-top-width: 8px;
+display: block;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+height: 0px;
+left: 1px;
+line-height: normal;
+position: absolute;
+top: 0px;
+width: 0px;
+	
+}
+
+
+
+.bubbleclose{
+background: url(icons/combined_v46_vr.png) -228px -48px;
+cursor: pointer;
+height: 13px;
+right: 16px;
+top: 16px;
+width: 13px;
+position: absolute;
+}
+
+.bubblemain {
+padding: 16px 28px;
+position: relative;
+}

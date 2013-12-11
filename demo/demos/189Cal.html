@@ -4,13 +4,20 @@
 <meta charset="utf-8" />
 <link rel='stylesheet' href='cupertino/jquery-ui.min.css' />
 <link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='../lib/jquery.qtip.min.css' rel='stylesheet' />
+<link href='gcalCss.css' rel='stylesheet' />
+
 <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='../lib/jquery.min.js'></script>
-<script src='../lib/jquery-ui.custom.min.js'></script>
+<script src='../lib/jquery.js'></script>
+<script src='../lib/jquery-ui.custom.js'></script>
+<script src='../lib/jquery.qtip.min.js'></script>
 <script src='../fullcalendar/fullcalendar.js'></script>
 <script>
-
+	var dayclicked = false;
+	var dayclickeddate;
 	$(document).ready(function() {
+		var bubble = $('#bubble').hide();
+		
 	
 		var date = new Date();
 		var d = date.getDate();
@@ -41,7 +48,62 @@
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
+				
+			},
+			theme: false,
+			editable: true,
+			height: 550,
+			events: [
+				{
+					title: 'All Day Event',
+					start: new Date(y, m, 1)
+				},
+				{
+					title: '10-29度',
+					type:'weather', //天气类型
+					start: new Date(y, m, 3),
+					editable :false
+				}
+			],
+			
+			eventRender: function(event, element) {
+				
+			},
+			
+			//周末的背景用深色标出
+			dayRender : function(date, cell){
+				if(checkWeekDay(date)){
+					cell.css({"background-color": "#f5f5f5" });
+				}
+			},
+			
+			eventAfterRender : function(event, element, view) {  
+				//渲染天气
+				if(event.type=='weather'){
+					var evtcontent = '<div style="background:#fff;top:0;right:15;color:#3974BC;font-weight:bold"><img src="weathericon/duoyun.png"><span class="fc-event-title">'+event.title+'</span>';  
+					evtcontent = evtcontent + '</div>';  
+					element.html(evtcontent);  
+				}
+			},
+			
+			
+			dayClick: function(date, allDay, jsEvent, view) { 
+				var bubble = $('#bubble');
+				//alert(dayclickeddate);
+				if( (dayclicked && dayclickeddate.getTime() == date.getTime()) ){
+					hideBubble();
+				}else{
+					//添加日历事件
+					
+					bubble.css("top",jsEvent.pageY);
+					bubble.css("left",jsEvent.pageX);
+					//alert(bubble);
+					bubble.show();
+					dayclicked = true;
+					dayclickeddate = date;
+					
+				}
+				/*
 				if (title) {
 					calendar.fullCalendar('renderEvent',
 						{
@@ -54,43 +116,50 @@
 					);
 				}
 				calendar.fullCalendar('unselect');
+				*/
 			},
-			theme: true,
-			editable: true,
-			height: 550,
-			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				}
-			],
 			
-			//dayClick: function() { alert('a day has been clicked!'); },
-			
-			/*eventClick: function(event) {  
-                
+			eventClick: function(event) {  
+					
                   
                     var x = window.event.x;  
                     var y = window.event.y;  
-                    alert(x + "<>" + y );  
-                    $("#eventInfo").css("display", "block");  
-                    $("#eventInfo").css("top",200);  
-                    $("#eventInfo").css("left",300);  
-                    $("#name").html(event.title);  
-                    $("#time").html(event.start);  
-                    $("#location").html(event.location);  
-                    $("#participants").html(event.participants);  
-                    $("#manager").html(event.manager);  
-               
+            //        alert(x + "<>" + y ); 
+			
+					$("#event_dialog").html("标题:"+event.title+"<br/>时间:"+ $.fullCalendar.formatDate(event.start, "MM月dd日 HH:mm")+"<br/>至:"+$.fullCalendar.formatDate(event.end, "MM月dd日 HH:mm"));
+					$( "#event_dialog" ).dialog({
+						title: "事件" 
+					});
+					
+					
+			
                 return false;  
             },
-			*/
+			
 		});
 		
 	
+		//公共函数
+		function checkWeekDay(sDate){ //判断是否为周末
+			//oDate=StringToDate(sDate)
+			day = sDate.getDay();
+			if(day==0 || day == 6){ //周末
+			   return true;
+			}
+			return false;
+		}
+		
 		
 	});
-
+		
+		
+	//隐藏气泡
+	function hideBubble(){
+		var bubble = $('#bubble');
+		bubble.hide();
+		dayclicked = false;
+		dayclickeddate = null;
+	}
 </script>
 <style>
 
@@ -110,9 +179,18 @@
 </head>
 <body>
 <div id='calendar'></div>
-<div id='eventInfo' style="display:block;float">
-<div id='name'>111111111</div>
-<div id='time'>2222222</div><div id='location'></div><div id='participants'></div><div id='manager'></div>
+<div id='event_dialog'>
+	
+</div>
+
+<!--对话框-->
+<div id="bubble"  class="bubble">
+	<div id="bubblePromo:d" style=""></div>
+	<div class="bubblemain">
+	<a href="javascript:hideBubble()"><div id="bubbleClose:d" class="bubbleclose" style=""></div></a>
+	<div class="bubblecontent" id="bubbleContent:d">123123123123</div>
+	
+	</div>
 </div>
 </body>
 </html>
