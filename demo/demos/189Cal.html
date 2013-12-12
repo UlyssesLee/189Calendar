@@ -15,6 +15,12 @@
 <script>
 	var dayclicked = false;
 	var dayclickeddate;
+	
+	//选择日历的全局变量
+	var selectstart;
+	var selectend;
+	var selectAllday;
+	
 	$(document).ready(function() {
 		var bubble = $('#bubble').hide();
 		
@@ -47,8 +53,40 @@
 			},
 			selectable: true,
 			selectHelper: true,
-			select: function(start, end, allDay) {
+			select: function(start, end, allDay, jsEvent, view) {
+				var bubble = $('#bubble');
 				
+				if( (dayclicked && dayclickeddate.getTime() == start.getTime()) ){
+					hideBubble();
+				}else{
+					//添加日历事件
+					
+					bubble.css("top",jsEvent.pageY);
+					bubble.css("left",jsEvent.pageX);
+					//全局i变量赋值
+					selectstart = start;
+					selectend = end;
+					selectAllday = allDay;
+					
+					bubble.show();
+					dayclicked = true;
+					dayclickeddate = start;
+					
+				}
+				/*
+				if (title) {
+					calendar.fullCalendar('renderEvent',
+						{
+							title: title,
+							start: start,
+							end: end,
+							allDay: allDay
+						},
+						true // make the event "stick"
+					);
+				}
+				calendar.fullCalendar('unselect');
+				*/
 			},
 			theme: false,
 			editable: true,
@@ -88,35 +126,7 @@
 			
 			
 			dayClick: function(date, allDay, jsEvent, view) { 
-				var bubble = $('#bubble');
-				//alert(dayclickeddate);
-				if( (dayclicked && dayclickeddate.getTime() == date.getTime()) ){
-					hideBubble();
-				}else{
-					//添加日历事件
-					
-					bubble.css("top",jsEvent.pageY);
-					bubble.css("left",jsEvent.pageX);
-					//alert(bubble);
-					bubble.show();
-					dayclicked = true;
-					dayclickeddate = date;
-					
-				}
-				/*
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
-				}
-				calendar.fullCalendar('unselect');
-				*/
+				
 			},
 			
 			eventClick: function(event) {  
@@ -160,6 +170,28 @@
 		dayclicked = false;
 		dayclickeddate = null;
 	}
+	
+	//jquery 初始化
+	$(function() {
+    $( "#bubbleSubmit" ) //创建任务的方法
+      .button()
+      .click(function( event ) {
+        event.preventDefault();
+		var calendar = $('#calendar');
+		calendar.fullCalendar('renderEvent',
+				{
+					title: $('#content').val(),
+					start: selectstart,
+					end: selectend,
+					allDay: selectAllday
+				},
+				true // make the event "stick"
+			);
+		
+		calendar.fullCalendar('unselect');
+		hideBubble();
+      });
+	});
 </script>
 <style>
 
@@ -188,8 +220,15 @@
 	<div id="bubblePromo:d" style=""></div>
 	<div class="bubblemain">
 	<a href="javascript:hideBubble()"><div id="bubbleClose:d" class="bubbleclose" style=""></div></a>
-	<div class="bubblecontent" id="bubbleContent:d">123123123123</div>
-	
+	<div class="bubblecontent" id="bubbleContent:d">
+		<div style=" text-align:left">活动 | 任务</div>
+		<br/>
+		<div>时间：	<span id=bubble_time>2014年2月6日 (周四)</span></div>
+		<div>内容：<input id="content" type="text" value=""></div>	
+		<div></div>
+		<div style='font-size: 13px;'>例如：晚上 7 点在 Pancho's 吃晚餐</div>
+		<div><input id="bubbleSubmit" type="submit" value="创建"> |  编辑活动 »</div>
+	</div>
 	</div>
 </div>
 </body>
